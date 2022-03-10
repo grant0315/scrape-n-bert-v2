@@ -32,8 +32,13 @@ def run_interactive():
 
     if UIH.input_loop() == True: # Ensure user input is correct or change input
         scrape_and_bert(UIH.get_url(), UIH.get_css_selector(),
-                        UIH.get_total_crawled_pages(), UIH.get_output_directory(),
+                        UIH.get_total_crawled_pages(), 5, UIH.get_output_directory(),
                         UIH.get_output_filename()) 
+        
+    BERT = bt.BertopicTraining(UIH.get_output_directory() + "/" + UIH.get_output_filename(),
+                               UIH.get_output_directory(), UIH.get_output_filename())
+    
+    BERT.trainModel()
 
 def run_config(path_to_config):
     # Start up config file handler, and pass in file path from sys args
@@ -41,7 +46,7 @@ def run_config(path_to_config):
 
     # Pass info to scrape and bert
     scrape_and_bert(CFH.url, CFH.css_selectors, CFH.close_spider_page_count,
-                    CFH.output_file_directory, CFH.output_filename)
+                    5, CFH.output_file_directory, CFH.output_filename)
 
     BERT = bt.BertopicTraining(CFH.output_file_directory + "/" + CFH.output_filename,
                              CFH.output_file_directory, CFH.output_filename)
@@ -51,5 +56,5 @@ def run_config(path_to_config):
 """
 Scrape and bake BABBBYYYY....
 """
-def scrape_and_bert(url, css_selector, total_crawled_pages, out_dir, out_file):
-    spider.start_scrape(url, css_selector, total_crawled_pages, out_dir, out_file)
+def scrape_and_bert(url, css_selector, total_crawled_pages, depth_limit, out_dir, out_file):
+    spider.start_scrape(url, css_selector, total_crawled_pages, depth_limit, out_dir, out_file)

@@ -75,6 +75,7 @@ class UserInputHandler():
         self.total_crawled_pages = input("Total crawled pages: ")
     
     def set_output_directory(self):
+        "If being ran in docker, set directory to: ./data"
         self.output_directory = input("Output directory (must already exist): ")
         
         if com.check_if_directory_exists(self.output_directory) == False:

@@ -1,0 +1,26 @@
+    Topic  Count                                                                                              Name
+0       0     49                                                                         0_read_think_lives_things
+1       1     48                                                    1_stupid_absolutely_gentleman_person gentleman
+2       2     42  2_life_thinking_world created process thinking changed_created process thinking changed changing
+3       3     36                                                 3_friend loyal_loyal_loyal book_friend loyal book
+4       4     35                                                             4_book_write_library_write book wants
+5       5     34                                                                              5_love_lack_way_hand
+6       6     30                                             6_know night_like know_day sunshine_day sunshine like
+7       7     27                                                            7_adventure_day_death_mind death great
+8       8     25                                            8_tea_cup tea large book long_tea large_tea large book
+9       9     23                                                                        9_going_dont_youre_friends
+10     10     21                                                 10_admiration_imagination rapid_rapid_rapid jumps
+13     11     20                                                                   11_stand_man_takes_enemies just
+12     13     20                                                     13_im_im hope someday youll join_join_dreamer
+11     12     20                                                12_indifference_opposite_indifference opposite_art
+14     14     18                                        14_miracle_ways live life miracle_ways live life_ways live
+15     15     17                                      15_good_friends good_sleepy conscience_conscience ideal life
+16     16     16                                                                           16_truth_lie_hurt_shoes
+17     17     15                                              17_hated_better hated loved_better hated_hated loved
+18     18     15                          18_understand_fool know point_know point understand_understand fool know
+19     19     15                                                 19__ive just_10000 ways wont_10000 ways wont work
+20     20     14                                                       20_accept_talk im_im answers accept_answers
+21     21     14                     21_alive_today truer true alive youer_truer true alive youer_truer true alive
+22     22     13                                   22_ended_gone intended_intended think ended needed_ended needed
+23     23     11                                                    23_harry_abilities_choices harry_far abilities
+24     -1      7                                                        -1_drug_hes like drug bella_drug bella_hes

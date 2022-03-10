@@ -1,20 +1,17 @@
 import src.helpers.cli_prompts as cp
 
 import json
+import os
+import pandas as pd
 from bertopic import BERTopic
 from sklearn.feature_extraction.text import CountVectorizer
 
 class BertopicTraining():
     def __init__(self, docs, out_dir, out_file):
-        self.dumps = json.dumps({})
+        # Create data frame and store as object
+        df = pd.read_csv(out_dir + "/" + out_file + ".csv")
 
-        self.content = []
-
-        print(self.dumps)
-
-        # Grab only content from scrapy .json file
-        for x in self.dumps:
-            self.content.append(self.dumps["content"])
+        self.data = df.content
 
         self.output_directory = out_dir
         self.output_filename = out_file
@@ -25,65 +22,65 @@ class BertopicTraining():
         probs = None
 
         try:
-            topics, probs = topic_model.fit_transform(self.dumps)
+            topics, probs = topic_model.fit_transform(self.data)
         except RuntimeError as e:
             cp.print_insufficient_resources()
 
         vectorizer_model = CountVectorizer(stop_words="english", ngram_range=(1, 5))
-        topic_model.update_topics(self.dumps, topics, vectorizer_model=vectorizer_model)
+        topic_model.update_topics(self.data, topics, vectorizer_model=vectorizer_model)
     
-        self.writeTrainingDataToDisk(topic_model,
+        self.write_training_data_to_disk(topic_model,
                                      topic_model.get_topic_info(), 
                                      topic_model.get_topics(),
                                      topic_model.get_representative_docs(), 
                                      topic_model.get_topic_freq())
 
-        self.writeVisualizationFilesToDisk(topic_model)
+        self.write_visualization_data_to_disk(topic_model)
 
         print(topic_model.get_topic_info())
 
-    def writeTrainingDataToDisk(self, topicModel, topicInfo, allTopicInfo, repDoc, topicFrequency):
-        topicInfoDir = os.path.join(self.outputDir, self.outputFilename + "_TOPIC_INFO" + ".txt")
-        allTopicInfoDir = os.path.join(self.outputDir, self.outputFilename + "_ALL_TOPIC_INFO" + ".txt")
-        repDocDir = os.path.join(self.outputDir, self.outputFilename + "_REPERSENTITIVE_DOCS" + ".txt")
-        topicFrequencyDir = os.path.join(self.outputDir, self.outputFilename + "_TOPIC_FREQUENCY" + ".txt")
-        topicModelDir = os.path.join(self.outputDir, self.outputFilename + "_TOPIC_MODEL" + ".bin")
+    def write_training_data_to_disk(self, topic_model, topicInfo, allTopicInfo, repDoc, topicFrequency):
+        topic_info_dir = os.path.join(self.output_directory, self.output_filename + "_TOPIC_INFO" + ".txt")
+        all_topic_info_dir = os.path.join(self.output_directory, self.output_filename + "_ALL_TOPIC_INFO" + ".txt")
+        rep_doc_dir = os.path.join(self.output_directory, self.output_filename + "_REPERSENTITIVE_DOCS" + ".txt")
+        topic_frequency_dir = os.path.join(self.output_directory, self.output_filename + "_TOPIC_FREQUENCY" + ".txt")
+        topic_model_dir = os.path.join(self.output_directory, self.output_filename + "_TOPIC_MODEL" + ".bin")
 
-        TIF = open(topicInfoDir, "w")
+        TIF = open(topic_info_dir, "w")
         TIF.write(topicInfo.to_string())
         TIF.close()
 
-        AIF = open(allTopicInfoDir, "w")
+        AIF = open(all_topic_info_dir, "w")
         AIF.write(str(allTopicInfo))
         AIF.close()
 
-        RDF = open(repDocDir, "w")
+        RDF = open(rep_doc_dir, "w")
         print(repDoc, file=RDF)
         RDF.close()
 
-        TFF = open(topicFrequencyDir, "w")
+        TFF = open(topic_frequency_dir, "w")
         TFF.write(topicFrequency.to_string())
         TFF.close()
 
-        topicModel.save(topicModelDir)
+        topic_model.save(topic_model_dir)
 
-    def writeVisualizationFilesToDisk(self, topicModel):
-        path = self.outputDir + "/visualizations/"
+    def write_visualization_data_to_disk(self, topic_model):
+        path = self.output_directory + "/visualizations/"
 
         try:
             os.mkdir(path)
         except FileExistsError:
             print("Visualizations folder already exists, writing to previously created folder.")
 
-        vt = topicModel.visualize_topics()
+        vt = topic_model.visualize_topics()
         vt.write_html(path + "topics_visual.html")
 
-        vhi = topicModel.visualize_hierarchy()
+        vhi = topic_model.visualize_hierarchy()
         vhi.write_html(path + "hierarchy_visual.html")
 
-        vb = topicModel.visualize_barchart()
+        vb = topic_model.visualize_barchart()
         vb.write_html(path + "barchart_visual.html")
 
-        vhe = topicModel.visualize_heatmap()
+        vhe = topic_model.visualize_heatmap()
         vhe.write_html(path + "heatmap_visual.html")
 
