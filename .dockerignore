@@ -1,0 +1,6 @@
+venv
+.gitignore
+*.ini
+*.json
+LICENSE
+README.md
